@@ -1,0 +1,8 @@
+#!/usr/bin/with-contenv sh
+
+# convert crlf
+tr -d '\r' < /config/cron > /tmp/cron
+
+# set crontab
+cat /tmp/cron && echo ""
+crontab -u debian /tmp/cron

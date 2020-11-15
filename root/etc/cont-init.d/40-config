@@ -5,4 +5,4 @@ tr -d '\r' < /config/cron > /tmp/cron
 
 # set crontab
 cat /tmp/cron && echo ""
-crontab -u debian /tmp/cron
+crontab -u alpine /tmp/cron

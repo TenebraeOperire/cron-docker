@@ -3,6 +3,8 @@ MAINTAINER TenebraeOperire
 
 RUN apk update --no-cache && apk add --no-cache ca-certificates nano curl
 
+RUN curl https://dot.net/v1/dotnet-install.sh | bash --runtime dotnet --channel Current
+
 RUN apk add --no-cache --virtual=build-dependencies wget  && \
     apk add --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/community shadow && \
     curl -o /tmp/s6-overlay.tar.gz -L \

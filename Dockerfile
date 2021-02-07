@@ -3,7 +3,7 @@ MAINTAINER TenebraeOperire
 
 RUN apk update --no-cache && apk add --no-cache ca-certificates nano curl
 
-RUN curl https://dot.net/v1/dotnet-install.sh | sh --runtime dotnet --channel Current
+RUN curl https://dot.net/v1/dotnet-install.sh -o dotnet.sh && ./dotnet.sh --runtime dotnet --channel Current && rm ./dotnet.sh
 
 RUN apk add --no-cache --virtual=build-dependencies wget  && \
     apk add --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/community shadow && \

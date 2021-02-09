@@ -1,21 +1,19 @@
-FROM mcr.microsoft.com/dotnet/runtime:5.0-alpine
-MAINTAINER TenebraeOperire
+FROM ubuntu:20.04
 
-RUN apk update --no-cache && apk add --no-cache ca-certificates nano curl
+RUN apt-get update && apt-get install -y ca-certificates nano curl wget python3 python3-pip
 
+RUN wget https://packages.microsoft.com/config/ubuntu/20.10/packages-microsoft-prod.deb -O packages-microsoft-prod.deb && \
+    dpkg -i packages-microsoft-prod.deb
 
+RUN apt-get update && apt-get install -y apt-transport-https && \
+    apt-get update && apt-get install -y dotnet-runtime-5.0
 
-RUN apk add --no-cache --virtual=build-dependencies wget  && \
-    apk add --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/community shadow && \
-    curl -o /tmp/s6-overlay.tar.gz -L \
-    "https://github.com/just-containers/s6-overlay/releases/latest/download/s6-overlay-amd64.tar.gz" && \
-    tar xfz /tmp/s6-overlay.tar.gz -C / && \
-    apk del --purge build-dependencies && \
-    rm -rf /tmp/* /var/tmp/* /var/cache/apk/*
+ADD https://github.com/just-containers/s6-overlay/releases/download/v2.2.0.1/s6-overlay-amd64-installer /tmp/
+RUN chmod +x /tmp/s6-overlay-amd64-installer && /tmp/s6-overlay-amd64-installer /
 
 RUN groupmod -g 1000 users && \
-    useradd -u 911 -U -d /config -s /bin/false alpine && \
-    usermod -G users alpine && \
+    useradd -u 911 -U -d /config -s /bin/false ubuntu && \
+    usermod -G users ubuntu && \
     mkdir -p /config /data
 
 COPY root/ /

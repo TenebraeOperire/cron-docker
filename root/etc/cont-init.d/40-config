@@ -1,5 +1,7 @@
 #!/usr/bin/with-contenv sh
 
+touch /config/cron
+
 # convert crlf
 tr -d '\r' < /config/cron > /tmp/cron
 

@@ -1,5 +1,7 @@
 FROM ubuntu:20.04
 
+ARG DEBIAN_FRONTEND=noninteractive
+
 RUN apt-get update && apt-get install -y ca-certificates nano curl wget python3 python3-pip
 
 RUN wget https://packages.microsoft.com/config/ubuntu/20.10/packages-microsoft-prod.deb -O packages-microsoft-prod.deb && \

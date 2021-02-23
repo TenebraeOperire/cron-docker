@@ -1,10 +1,17 @@
-#!/usr/bin/with-contenv sh
+#!/bin/bash
 
 touch /config/cron
 
-# convert crlf
+# convert crlf and add newline
 tr -d '\r' < /config/cron > /tmp/cron
+echo >> /tmp/cron
 
-# set crontab
-cat /tmp/cron && echo ""
-crontab -u alpine /tmp/cron
+# set crontab and echo
+crontab /tmp/cron
+crontab -l
+
+mkfifo /tmp/stdout /tmp/stderr
+chmod 0666 /tmp/stdout /tmp/stderr
+
+tail -f /tmp/stdout &
+tail -f /tmp/stderr >&2 &

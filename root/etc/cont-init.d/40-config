@@ -1,8 +1,11 @@
 #!/usr/bin/with-contenv sh
 
-# convert crlf
-tr -d '\r' < /config/cron > /tmp/cron
+touch /config/cron
 
-# set crontab
-cat /tmp/cron && echo ""
-crontab -u alpine /tmp/cron
+# convert crlf and add newline
+tr -d '\r' < /config/cron > /tmp/cron
+echo >> /tmp/cron
+
+# set crontab and echo
+crontab /tmp/cron
+crontab -l

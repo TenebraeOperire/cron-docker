@@ -1,5 +1,5 @@
-FROM python:alpine
-MAINTAINER TenebraeOperire
+FROM mcr.microsoft.com/dotnet/runtime-deps:5.0-alpine
+MAINTAINER nuphion
 
 RUN apk update --no-cache && apk add --no-cache ca-certificates nano curl
 
@@ -11,10 +11,7 @@ RUN apk add --no-cache --virtual=build-dependencies wget  && \
     apk del --purge build-dependencies && \
     rm -rf /tmp/* /var/tmp/* /var/cache/apk/*
 
-RUN groupmod -g 1000 users && \
-    useradd -u 911 -U -d /config -s /bin/false alpine && \
-    usermod -G users alpine && \
-    mkdir -p /config /data
+RUN mkdir -p /config /data
 
 COPY root/ /
 

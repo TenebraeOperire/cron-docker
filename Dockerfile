@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/runtime-deps:5.0-alpine
+FROM mcr.microsoft.com/dotnet/runtime:6.0-alpine
 MAINTAINER nuphion
 
 RUN apk update --no-cache && apk add --no-cache ca-certificates nano curl
